@@ -4,14 +4,15 @@
  * Concatenates modular CSS files from src/style/ into root styles.css
  */
 
-import { readFileSync, writeFileSync, existsSync, readdirSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from 'fs';
 import { join, dirname, resolve, relative } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const STYLE_DIR = join(ROOT, 'src', 'style');
-const OUTPUT = join(ROOT, 'styles.css');
+const OUTPUT_DIR = join(ROOT, 'dist', 'newclaudian');
+const OUTPUT = join(OUTPUT_DIR, 'styles.css');
 const INDEX_FILE = join(STYLE_DIR, 'index.css');
 
 const IMPORT_PATTERN = /^\s*@import\s+(?:url\()?['"]([^'"]+)['"]\)?\s*;/gm;
@@ -130,8 +131,13 @@ function build() {
   }
 
   const output = parts.join('\n');
+
+  if (!existsSync(OUTPUT_DIR)) {
+    mkdirSync(OUTPUT_DIR, { recursive: true });
+  }
+
   writeFileSync(OUTPUT, output);
-  console.log(`Built styles.css (${(output.length / 1024).toFixed(1)} KB)`);
+  console.log(`Built ${relative(ROOT, OUTPUT)} (${(output.length / 1024).toFixed(1)} KB)`);
 }
 
 build();

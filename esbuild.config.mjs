@@ -19,29 +19,41 @@ if (existsSync('.env.local')) {
 
 const prod = process.argv[2] === 'production';
 
-// Obsidian plugin folder path (set via OBSIDIAN_VAULT env var or .env.local)
+const distDir = 'dist/newclaudian';
 const OBSIDIAN_VAULT = process.env.OBSIDIAN_VAULT;
 const OBSIDIAN_PLUGIN_PATH = OBSIDIAN_VAULT && existsSync(OBSIDIAN_VAULT)
   ? path.join(OBSIDIAN_VAULT, '.obsidian', 'plugins', 'NewClaudian')
   : null;
 
-// Plugin to copy built files to Obsidian plugin folder
+function copyBuildFiles(files, sourceDir, targetDir) {
+  if (!existsSync(targetDir)) {
+    mkdirSync(targetDir, { recursive: true });
+  }
+
+  for (const file of files) {
+    const src = path.join(sourceDir, file);
+    const dest = path.join(targetDir, file);
+    if (existsSync(src)) {
+      copyFileSync(src, dest);
+      console.log(`Copied ${file} to ${targetDir}`);
+    }
+  }
+}
+
+// Plugin to copy manifest.json into dist and (optionally) sync to Obsidian plugin folder
 const copyToObsidian = {
   name: 'copy-to-obsidian',
   setup(build) {
     build.onEnd((result) => {
-      if (result.errors.length > 0 || !OBSIDIAN_PLUGIN_PATH) return;
+      if (result.errors.length > 0) return;
 
-      if (!existsSync(OBSIDIAN_PLUGIN_PATH)) {
-        mkdirSync(OBSIDIAN_PLUGIN_PATH, { recursive: true });
-      }
+      // Always stage manifest.json into the dist folder so the build is self-contained
+      copyBuildFiles(['manifest.json'], '.', distDir);
 
-      const files = ['main.js', 'manifest.json', 'styles.css'];
-      for (const file of files) {
-        if (existsSync(file)) {
-          copyFileSync(file, path.join(OBSIDIAN_PLUGIN_PATH, file));
-          console.log(`Copied ${file} to Obsidian plugin folder`);
-        }
+      // If an Obsidian vault is configured, sync the full plugin bundle there
+      if (OBSIDIAN_PLUGIN_PATH) {
+        const files = ['main.js', 'manifest.json', 'styles.css'];
+        copyBuildFiles(files, distDir, OBSIDIAN_PLUGIN_PATH);
       }
     });
   }
@@ -79,7 +91,7 @@ const context = await esbuild.context({
   logLevel: 'info',
   sourcemap: prod ? false : 'inline',
   treeShaking: true,
-  outfile: 'main.js',
+  outfile: path.join(distDir, 'main.js'),
 });
 
 if (prod) {

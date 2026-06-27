@@ -106,6 +106,10 @@
       "copied": "Kopiert!",
       "saved": "gespeichert!",
       "saveToNote": "In Notiz speichern",
+      "saveSession": "Konversation speichern",
+      "noMessages": "Keine Nachrichten zum Speichern",
+      "exportedOn": "Exportiert am",
+      "attachedFiles": "Angehängte Dateien",
       "fileName": "Dateiname",
       "folder": "Ordner",
       "changeFolder": "Ordner ändern",
@@ -113,6 +117,7 @@
       "rootFolder": "Vault-Stammverzeichnis",
       "generatingTitle": "Dateiname wird generiert, bitte warten Sie 2 Sekunden...",
       "generateFilenamePrompt": "Geben Sie einen sehr kurzen, prägnanten deutschen Dateinamen (ohne Erweiterung, max. 10 Zeichen) für diesen Text an:\n\n{text}",
+      "generateSessionFilenamePrompt": "Geben Sie einen sehr kurzen, prägnanten englischen Dateinamen (ohne Erweiterung, max. 10 Zeichen) für diese Konversation an:\n\n{text}",
       "thinking": "Denken {time}s...",
       "writing": "Schreiben...",
       "done": "FERTIG",
@@ -124,6 +129,10 @@
         "running": "Läuft im Hintergrund",
         "orphaned": "Verwaist"
       }
+    },
+    "role": {
+      "user": "Benutzer",
+      "assistant": "Assistent"
     }
   },
   "settings": {

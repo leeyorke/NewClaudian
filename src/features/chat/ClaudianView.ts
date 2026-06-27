@@ -1,10 +1,14 @@
 import type { EventRef, WorkspaceLeaf } from 'obsidian';
 import { ItemView, Notice, Scope, setIcon } from 'obsidian';
 
+import type { ChatMessage } from '../../core/types';
 import { getContextWindowSize, VIEW_TYPE_CLAUDIAN } from '../../core/types';
+import { t } from '../../i18n';
 import type ClaudianPlugin from '../../main';
+import { SaveNoteModal } from '../../shared/modals/SaveNoteModal';
 import { AvatarSettingsModal } from '../settings/ui/AvatarSettingsModal';
 import { LOGO_SVG } from './constants';
+import { TitleGenerationService } from './services/TitleGenerationService';
 import { TabBar, TabManager, updatePlanModeUI } from './tabs';
 import type { TabData, TabId } from './tabs/types';
 
@@ -279,6 +283,15 @@ export class ClaudianView extends ItemView {
     this.headerActionsContent = document.createElement('div');
     this.headerActionsContent.className = 'claudian-header-actions';
 
+    // Save session button
+    const saveSessionBtn = this.headerActionsContent.createDiv({ cls: 'claudian-header-btn' });
+    setIcon(saveSessionBtn, 'file-down');
+    saveSessionBtn.setAttribute('aria-label', t('chat.renderer.saveSession' as any));
+    saveSessionBtn.addEventListener('click', async (e) => {
+        e.stopPropagation();
+        void this.saveSessionToNote();
+    });
+
     // New tab button (plus icon)
     const newTabBtn = this.headerActionsContent.createDiv({ cls: 'claudian-header-btn claudian-new-tab-btn' });
     setIcon(newTabBtn, 'square-plus');
@@ -370,6 +383,137 @@ export class ClaudianView extends ItemView {
 
     // Update tab bar and title visibility
     this.updateTabBarVisibility();
+  }
+
+  // ============================================
+  // Session Saving
+  // ============================================
+
+  /**
+   * Opens the save modal to save the entire conversation (both user and assistant messages).
+   */
+  private async saveSessionToNote(): Promise<void> {
+    const activeTab = this.tabManager?.getActiveTab();
+    if (!activeTab) return;
+
+    const messages = activeTab.state.messages;
+    if (messages.length === 0) {
+      new Notice(t('chat.renderer.noMessages' as any));
+      return;
+    }
+
+    const markdown = this.formatSessionToMarkdown(messages);
+
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const MM = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
+    const formattedTime = `${yyyy}${MM}${dd}-${hh}${mm}${ss}`;
+    const fallbackFilename = `conversation-${formattedTime}.md`;
+
+    const saveModal = new SaveNoteModal(
+      this.app,
+      t('chat.renderer.generatingTitle' as any),
+      markdown,
+      async (filename, folderPath) => {
+        try {
+          const fullPath = folderPath === '/' ? filename : `${folderPath}/${filename}`;
+          const file = await this.app.vault.create(fullPath, markdown);
+          const leaf = this.app.workspace.getLeaf(true);
+          await leaf.openFile(file);
+
+          new Notice(t('chat.renderer.saved' as any));
+        } catch (err) {
+          new Notice(`Failed to save conversation: ${err instanceof Error ? err.message : 'Unknown error'}`);
+          throw err;
+        }
+      },
+      true
+    );
+    saveModal.open();
+
+    // Generate a title using the LLM
+    try {
+      const titleService = new TitleGenerationService(this.plugin);
+      const tempId = `save-session-${Date.now()}`;
+      const prompt = (t('chat.renderer.generateSessionFilenamePrompt' as any, { text: markdown.substring(0, 2000) })) ||
+                     `Provide a very short, concise filename in English (without extension, max 10 chars) for this conversation between user and AI assistant:\n\n${markdown.substring(0, 2000)}`;
+
+      await titleService.generateTitle(
+        tempId,
+        prompt,
+        async (_id: string, result: { success: boolean; title?: string }) => {
+          if (result.success && result.title) {
+            const cleanTitle = result.title.replace(/[\\/:"*?<>|]/g, '').replace(/\s+/g, '-');
+            saveModal.updateFilename(`${cleanTitle}.md`);
+          } else {
+            saveModal.setGenerationFailed(fallbackFilename);
+          }
+        }
+      );
+    } catch {
+      saveModal.setGenerationFailed(fallbackFilename);
+    }
+  }
+
+  /**
+   * Formats all messages in the conversation into a single markdown document.
+   */
+  private formatSessionToMarkdown(messages: ChatMessage[]): string {
+    const lines: string[] = [];
+
+    for (const msg of messages) {
+      // Skip internal messages
+      if (msg.isInterrupt || msg.isRebuiltContext) continue;
+
+      if (msg.role === 'user') {
+        const content = msg.displayContent ?? msg.content;
+        if (content) {
+          lines.push(`## ${t('chat.role.user' as any)}`);
+          lines.push('');
+          lines.push(content);
+          lines.push('');
+        }
+
+        // List attached files
+        if (msg.attachedFiles && msg.attachedFiles.length > 0) {
+          lines.push(`**${t('chat.renderer.attachedFiles' as any)}:**`);
+          for (const file of msg.attachedFiles) {
+            lines.push(`- \`${file}\``);
+          }
+          lines.push('');
+        }
+      } else if (msg.role === 'assistant') {
+        const textContent = this.extractAssistantText(msg);
+        if (textContent) {
+          lines.push(`## ${t('chat.role.assistant' as any)}`);
+          lines.push('');
+          lines.push(textContent);
+          lines.push('');
+        }
+      }
+    }
+
+    return lines.join('\n');
+  }
+
+  /**
+   * Extracts text content blocks from an assistant message, skipping tool calls and thinking blocks.
+   */
+  private extractAssistantText(msg: ChatMessage): string {
+    if (msg.contentBlocks && msg.contentBlocks.length > 0) {
+      const textBlocks = msg.contentBlocks
+        .filter((b): b is { type: 'text'; content: string } => b.type === 'text')
+        .map(b => b.content)
+        .filter(c => c && c.trim());
+      if (textBlocks.length > 0) {
+        return textBlocks.join('\n\n');
+      }
+    }
+    return msg.content || '';
   }
 
   // ============================================

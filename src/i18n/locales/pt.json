@@ -106,6 +106,10 @@
       "copied": "Copiado!",
       "saved": "salvo!",
       "saveToNote": "Salvar na Nota",
+      "saveSession": "Salvar conversa",
+      "noMessages": "Nenhuma mensagem para salvar",
+      "exportedOn": "Exportado em",
+      "attachedFiles": "Arquivos anexados",
       "fileName": "Nome do arquivo",
       "folder": "Pasta",
       "changeFolder": "Mudar pasta",
@@ -113,6 +117,7 @@
       "rootFolder": "Raiz do cofre",
       "generatingTitle": "Gerando nome do arquivo, aguarde 2 segundos...",
       "generateFilenamePrompt": "Forneça um nome de arquivo muito curto e conciso em português (sem extensão, máx. 10 caracteres) para este texto:\n\n{text}",
+      "generateSessionFilenamePrompt": "Forneça um nome de arquivo muito curto e conciso em inglês (sem extensão, máx. 10 caracteres) para esta conversa:\n\n{text}",
       "thinking": "Pensando {time}s...",
       "writing": "Escrevendo...",
       "done": "CONCLUÍDO",
@@ -124,6 +129,10 @@
         "running": "Executando em segundo plano",
         "orphaned": "Órfão"
       }
+    },
+    "role": {
+      "user": "Usuário",
+      "assistant": "Assistente"
     }
   },
   "settings": {

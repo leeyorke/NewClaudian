@@ -16,6 +16,13 @@ An Obsidian plugin that embeds Claude Code as an AI collaborator in your vault. 
 
 ### ✨ New in NewClaudian
 
+#### 2.1.9 New Features
+
+- **New Session Saving Functionality**: Added a button to save the entire session's content to the knowledge base.
+- **Default Build Location**: Defaults to `dist/newclaudian/`.
+
+#### v2.1.8之前
+
 - **Full-Format File & Folder Interaction**: Massively enhanced the chat input's drag-and-drop and interactive capabilities:
   - **Mixed Text & File Inline Layout**: The chat input has been entirely refactored to support a true rich-text experience. Files and folders can be dragged and dropped or inserted via `@` mentions **directly inline** with your text at any cursor position. You can select, copy, or intuitively delete these file chips using the `Backspace` key, just like regular text.
   - **Recursive Folder Parsing**: Directly drag and drop entire folders (from the OS or file tree) into the chat box. The system automatically parses the nested hierarchy and files recursively to import them as context in bulk.

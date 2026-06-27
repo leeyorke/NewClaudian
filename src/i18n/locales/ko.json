@@ -106,6 +106,10 @@
       "copied": "복사되었습니다!",
       "saved": "저장되었습니다!",
       "saveToNote": "노트에 저장",
+      "saveSession": "대화 저장",
+      "noMessages": "저장할 메시지가 없습니다",
+      "exportedOn": "내보낸 날짜",
+      "attachedFiles": "첨부 파일",
       "fileName": "파일 이름",
       "folder": "폴더",
       "changeFolder": "폴더 변경",
@@ -113,6 +117,7 @@
       "rootFolder": "보관소 루트",
       "generatingTitle": "파일 이름 생성 중입니다. 2초만 기다려주세요...",
       "generateFilenamePrompt": "이 텍스트에 대해 매우 짧고 간결한 한국어 파일 이름(확장자 제외, 최대 10자)을 제공하십시오:\n\n{text}",
+      "generateSessionFilenamePrompt": "이 대화에 대해 매우 짧고 간결한 영어 파일 이름(확장자 제외, 최대 10자)을 제공하십시오:\n\n{text}",
       "thinking": "생각 중 {time}s...", 
       "writing": "작성 중...",
       "done": "완료",
@@ -124,6 +129,10 @@
         "running": "백그라운드에서 실행 중",
         "orphaned": "연결 끊김"
       }
+    },
+    "role": {
+      "user": "사용자",
+      "assistant": "어시스턴트"
     }
   },
   "settings": {

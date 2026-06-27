@@ -102,8 +102,12 @@
     "renderer": {
       "copyMessage": "Copy message",
       "copied": "Copied!",
-      "saved": "saved!",
+      "saved": "Saved!",
       "saveToNote": "Save to Note",
+      "saveSession": "Save conversation",
+      "noMessages": "No messages to save",
+      "exportedOn": "Exported on",
+      "attachedFiles": "Attached files",
       "fileName": "File Name",
       "folder": "Folder",
       "changeFolder": "Change Folder",
@@ -111,6 +115,7 @@
       "rootFolder": "Vault Root",
       "generatingTitle": "Generating filename, please wait 2 seconds...",
       "generateFilenamePrompt": "Provide a very short, concise filename in English (without extension, max 10 chars) for this text:\n\n{text}",
+      "generateSessionFilenamePrompt": "Provide a very short, concise filename in English (without extension, max 10 chars) for this conversation:\n\n{text}",
       "thinking": "Thinking {time}s...",
       "writing": "Writing...",
       "done": "DONE",
@@ -122,6 +127,10 @@
         "running": "Running in background",
         "orphaned": "Orphaned"
       }
+    },
+    "role": {
+      "user": "User",
+      "assistant": "Claude"
     }
   },
   "settings": {

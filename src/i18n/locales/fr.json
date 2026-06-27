@@ -106,6 +106,10 @@
       "copied": "Copié !",
       "saved": "enregistré !",
       "saveToNote": "Enregistrer dans la note",
+      "saveSession": "Enregistrer la conversation",
+      "noMessages": "Aucun message à enregistrer",
+      "exportedOn": "Exporté le",
+      "attachedFiles": "Fichiers joints",
       "fileName": "Nom du fichier",
       "folder": "Dossier",
       "changeFolder": "Changer de dossier",
@@ -113,6 +117,7 @@
       "rootFolder": "Racine du coffre",
       "generatingTitle": "Génération du nom de fichier, veuillez patienter 2 secondes...",
       "generateFilenamePrompt": "Fournissez un nom de fichier très court et concis en français (sans extension, max 10 caractères) pour ce texte :\n\n{text}",
+      "generateSessionFilenamePrompt": "Fournissez un nom de fichier très court et concis en anglais (sans extension, max 10 caractères) pour cette conversation :\n\n{text}",
       "thinking": "Réflexion {time}s...",
       "writing": "Écriture...",
       "done": "TERMINÉ",
@@ -124,6 +129,10 @@
         "running": "Exécution en arrière-plan",
         "orphaned": "Orphelin"
       }
+    },
+    "role": {
+      "user": "Utilisateur",
+      "assistant": "Assistant"
     }
   },
   "settings": {

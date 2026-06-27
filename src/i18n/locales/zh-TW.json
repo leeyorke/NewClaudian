@@ -108,6 +108,10 @@
       "copied": "已複製！",
       "saved": "已儲存!",
       "saveToNote": "儲存為筆記",
+      "saveSession": "儲存對話",
+      "noMessages": "沒有可儲存的訊息",
+      "exportedOn": "匯出日期",
+      "attachedFiles": "附加檔案",
       "fileName": "檔案名稱",
       "folder": "儲存目錄",
       "changeFolder": "更改目錄",
@@ -115,6 +119,7 @@
       "rootFolder": "儲存庫根目錄",
       "generatingTitle": "正在生成檔案名稱，請稍等2秒鐘...",
       "generateFilenamePrompt": "請根據以下內容，提取一個非常簡短、精煉的繁體中文檔案名稱（不含副檔名，最多10個字元）：\n\n{text}",
+      "generateSessionFilenamePrompt": "請為這個對話提供一個非常簡短、精煉的英文檔案名稱（不含副檔名，最多10個字元）：\n\n{text}",
       "thinking": "思考中 {time}s...",
       "writing": "寫入中...",
       "done": "完成",
@@ -126,6 +131,10 @@
         "running": "背景執行中",
         "orphaned": "已斷開"
       }
+    },
+    "role": {
+      "user": "使用者",
+      "assistant": "助手"
     }
   },
   "settings": {

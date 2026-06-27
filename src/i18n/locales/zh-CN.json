@@ -104,6 +104,10 @@
       "copied": "已复制！",
       "saved": "已保存！",
       "saveToNote": "保存为笔记",
+      "saveSession": "保存会话",
+      "noMessages": "没有消息可保存",
+      "exportedOn": "导出时间",
+      "attachedFiles": "附件",
       "fileName": "文件名称",
       "folder": "保存目录",
       "changeFolder": "更改目录",
@@ -111,6 +115,7 @@
       "rootFolder": "仓库根目录",
       "generatingTitle": "正在生成文件名，请稍后...",
       "generateFilenamePrompt": "请根据以下内容，提取一个非常简短、精炼的中文文件名（不带扩展名，最多10个字符）：\n\n{text}",
+      "generateSessionFilenamePrompt": "请根据以下对话内容，提取一个非常简短、精炼的中文文件名（不带扩展名，最多10个字符）：\n\n{text}",
       "thinking": "思考中 {time}s...",
       "writing": "写入中...",
       "done": "完成",
@@ -122,6 +127,10 @@
         "running": "后台运行中",
         "orphaned": "已断开"
       }
+    },
+    "role": {
+      "user": "用户",
+      "assistant": "Claude"
     }
   },
   "settings": {

@@ -106,6 +106,10 @@
       "copied": "コピーしました！",
       "saved": "保存しました!",
       "saveToNote": "ノートに保存",
+      "saveSession": "会話を保存",
+      "noMessages": "保存するメッセージがありません",
+      "exportedOn": "エクスポート日",
+      "attachedFiles": "添付ファイル",
       "fileName": "ファイル名",
       "folder": "フォルダー",
       "changeFolder": "フォルダーを変更",
@@ -113,6 +117,7 @@
       "rootFolder": "Vaultのルート",
       "generatingTitle": "ファイル名を生成しています。2秒ほどお待ちください...",
       "generateFilenamePrompt": "以下のテキストから、非常に短く簡潔な日本語のファイル名（拡張子なし、最大10文字）を作成してください:\n\n{text}",
+      "generateSessionFilenamePrompt": "この会話に対して、非常に短く簡潔な英語のファイル名（拡張子なし、最大10文字）を提供してください:\n\n{text}",
       "thinking": "思考中 {time}s...",
       "writing": "書き込み中...",
       "done": "完了",
@@ -124,6 +129,10 @@
         "running": "バックグラウンドで実行中",
         "orphaned": "切断されました"
       }
+    },
+    "role": {
+      "user": "ユーザー",
+      "assistant": "アシスタント"
     }
   },
   "settings": {

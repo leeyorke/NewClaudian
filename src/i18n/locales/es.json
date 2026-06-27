@@ -106,6 +106,10 @@
       "copied": "¡Copiado!",
       "saved": "¡guardado!",
       "saveToNote": "Guardar en nota",
+      "saveSession": "Guardar conversación",
+      "noMessages": "No hay mensajes para guardar",
+      "exportedOn": "Exportado el",
+      "attachedFiles": "Archivos adjuntos",
       "fileName": "Nombre del archivo",
       "folder": "Carpeta",
       "changeFolder": "Cambiar carpeta",
@@ -113,6 +117,7 @@
       "rootFolder": "Raíz del baúl",
       "generatingTitle": "Generando nombre de archivo, espere 2 segundos...",
       "generateFilenamePrompt": "Proporcione un nombre de archivo muy corto y conciso en español (sin extensión, máx. 10 caracteres) para este texto:\n\n{text}",
+      "generateSessionFilenamePrompt": "Proporcione un nombre de archivo muy corto y conciso en inglés (sin extensión, máx. 10 caracteres) para esta conversación:\n\n{text}",
       "thinking": "Pensando {time}s...",
       "writing": "Escribiendo...",
       "done": "HECHO",
@@ -124,6 +129,10 @@
         "running": "Ejecutando en segundo plano",
         "orphaned": "Huérfano"
       }
+    },
+    "role": {
+      "user": "Usuario",
+      "assistant": "Asistente"
     }
   },
   "settings": {
