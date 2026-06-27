@@ -58,6 +58,6 @@ jobs:
 
             **Full Changelog**: https://github.com/${{ github.repository }}/compare/${{ steps.prev_tag.outputs.tag }}...${{ github.ref_name }}
           files: |
-            main.js
-            manifest.json
-            styles.css
+            dist/main.js
+            dist/manifest.json
+            dist/styles.css

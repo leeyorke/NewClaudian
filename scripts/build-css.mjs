@@ -11,7 +11,7 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const STYLE_DIR = join(ROOT, 'src', 'style');
-const OUTPUT_DIR = join(ROOT, 'dist', 'newclaudian');
+const OUTPUT_DIR = join(ROOT, 'dist');
 const OUTPUT = join(OUTPUT_DIR, 'styles.css');
 const INDEX_FILE = join(STYLE_DIR, 'index.css');
 

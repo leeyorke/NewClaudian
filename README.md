@@ -19,7 +19,7 @@ An Obsidian plugin that embeds Claude Code as an AI collaborator in your vault. 
 #### 2.1.9 New Features
 
 - **New Session Saving Functionality**: Added a button to save the entire session's content to the knowledge base.
-- **Default Build Location**: Defaults to `dist/newclaudian/`.
+- **Default Build Location**: Defaults to `dist/`.
 
 #### v2.1.8之前
 
