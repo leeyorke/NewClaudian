@@ -600,13 +600,30 @@ export function parseSDKMessageToChat(
     : Date.now();
 
   // SDK wraps slash commands in XML tags — restore clean display (e.g., /compact, /md2docx)
+  // e.g. <command-name>/learn-english</command-name><command-message>Typhoon Bavi...</command-message>
   const commandNameMatch = sdkMsg.type === 'user'
     ? textContent.match(/<command-name>(\/[^<]+)<\/command-name>/)
+    : null;
+  // The text inside <command-message> holds the command's arguments/body — must be
+  // restored alongside the command name, otherwise reloaded history only shows the bare
+  // command (e.g. "/learn-english") and silently drops the rest of the user's message.
+  const commandMessageMatch = sdkMsg.type === 'user'
+    ? textContent.match(/<command-message>([\s\S]*?)<\/command-message>/)
     : null;
 
   let displayContent: string | undefined;
   if (sdkMsg.type === 'user') {
-    displayContent = commandNameMatch ? commandNameMatch[1] : extractDisplayContent(textContent);
+    if (commandNameMatch) {
+      const commandName = commandNameMatch[1];
+      const commandArgs = commandMessageMatch ? commandMessageMatch[1].trim() : '';
+      // Some commands (e.g. bare "/compact") have no arguments — don't append an empty
+      // string, and guard against the message body being identical to the command name.
+      displayContent = commandArgs && commandArgs !== commandName.replace(/^\//, '')
+        ? `${commandName} ${commandArgs}`
+        : commandName;
+    } else {
+      displayContent = extractDisplayContent(textContent);
+    }
   }
 
   const isInterrupt = sdkMsg.type === 'user' && isInterruptSignalText(textContent);
